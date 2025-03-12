@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/register_page_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="20dp"
+    tools:context=".ui.RegisterActivity">
+
+    <TextView
+        android:id="@+id/register_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:text="@string/title_register"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/registerEmailInput"
+        android:layout_width="350dp"
+        android:layout_height="48dp"
+        android:autofillHints=""
+        android:hint="@string/user_email"
+        android:inputType="textEmailAddress" />
+
+    <EditText
+        android:id="@+id/registerPasswordInput"
+        android:layout_width="350dp"
+        android:layout_height="48dp"
+        android:autofillHints=""
+        android:hint="@string/user_password"
+        android:inputType="textPassword" />
+
+    <Button
+        android:id="@+id/registerUserButton"
+        android:layout_width="320dp"
+        android:layout_height="wrap_content"
+        android:text="@string/button_register"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/loginPageButton"
+        android:layout_width="320dp"
+        android:layout_height="wrap_content"
+        android:text="@string/button_go_login"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+</LinearLayout>

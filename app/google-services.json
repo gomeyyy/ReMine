@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "989947400329",
+    "project_id": "remine-382d4",
+    "storage_bucket": "remine-382d4.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:989947400329:android:35b079c98b71f214a9f658",
+        "android_client_info": {
+          "package_name": "com.razinrahimi.remine"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCNOaIp7HFikd64m1LINx8mXGO1cpZLMdQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

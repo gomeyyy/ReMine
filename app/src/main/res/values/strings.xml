@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">ReMine</string>
+    <string name="title_login">Login Page</string>
+    <string name="title_register">Register Page</string>
+    <string name="user_email">Email (@example.com)</string>
+    <string name="user_password">Password</string>
+    <string name="button_login">Login</string>
+    <string name="button_go_login">Go To Login</string>
+    <string name="button_register">Register</string>
+
 </resources>
