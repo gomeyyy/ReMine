@@ -8,6 +8,7 @@
     android:gravity="center"
     android:orientation="vertical"
     android:padding="20dp"
+    android:background="@drawable/bg"
     tools:context=".ui.LoginActivity">
 
     <TextView
@@ -18,27 +19,30 @@
         android:text="@string/title_login"
         android:textAlignment="center"
         android:textSize="24sp"
+        android:textColor="@color/white"
         android:textStyle="bold" />
 
     <EditText
         android:id="@+id/user_email_input"
-        android:layout_width="match_parent"
+        android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:autofillHints=""
         android:ems="10"
         android:hint="@string/user_email"
         android:inputType="textEmailAddress"
+        android:textColorHint="@color/white"
         android:padding="20dp"
         android:textSize="18sp"
         android:textStyle="normal" />
 
     <EditText
         android:id="@+id/user_pass_input"
-        android:layout_width="match_parent"
+        android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:autofillHints=""
         android:ems="10"
         android:inputType="textPassword"
+        android:textColorHint="@color/white"
         android:padding="20dp"
         android:hint="@string/user_password"/>
 
