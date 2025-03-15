@@ -7,5 +7,36 @@
     android:layout_height="match_parent"
     tools:context=".ui.DashboardActivity"
     android:background="background.jpg"
-    />
+    >
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="785dp"
+        android:layout_height="1029dp"
+        android:rotation="90"
+        app:srcCompat="@drawable/background"
+        tools:layout_editor_absoluteX="-187dp"
+        tools:layout_editor_absoluteY="-149dp" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="475dp"
+        android:layout_height="290dp"
+        android:rotation="180"
+        android:rotationY="180"
+        app:srcCompat="@drawable/HeaderWavyPurple"
+        tools:layout_editor_absoluteX="-18dp"
+        tools:layout_editor_absoluteY="-75dp" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ReMine ✧"
+        android:textColor="@color/white"
+        tools:layout_editor_absoluteX="176dp"
+        tools:layout_editor_absoluteY="38dp"
+        tools:ignore="HardcodedText" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -10,7 +10,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.razinrahimi.remine.R;
 
-public class MasterTimetableActivity extends AppCompatActivity {
+public class MasterTimetable extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

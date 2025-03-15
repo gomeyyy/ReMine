@@ -13,7 +13,7 @@
         android:theme="@style/Theme.ReMine"
         tools:targetApi="31" >
         <activity
-            android:name=".ui.MasterTimetableActivity"
+            android:name=".ui.MasterTimetable"
             android:exported="false" />
         <activity
             android:name=".ui.DashboardActivity"
