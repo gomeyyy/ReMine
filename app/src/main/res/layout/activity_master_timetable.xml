@@ -6,8 +6,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:rotationX="-4"
-    tools:context=".ui.MasterTimetableActivity">
+    tools:context=".ui.MasterTimetable">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
