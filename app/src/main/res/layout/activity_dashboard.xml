@@ -6,90 +6,75 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background"
-    tools:context=".ui.DashboardActivity">
-
-    <!-- Background ImageView -->
-
-    <!-- Header ImageView -->
-
-    <!-- Title TextView -->
-
-
-    <ImageView
-        android:id="@+id/imageView4"
-        android:layout_width="469dp"
-        android:layout_height="wrap_content"
-
-        android:layout_marginBottom="-280dp"
-        android:elevation="1000dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/dashboardbuttom"
-        tools:ignore="ContentDescription" />
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="189dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="68dp"
-        android:fontFamily="sans-serif-black"
-        android:text="Hello, User!"
-        android:textColor="@color/white"
-        android:textSize="30dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/imageView5"
-        android:layout_width="500dp"
-        android:layout_height="872dp"
-        android:layout_marginTop="4dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.505"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/mainmenu_background_putih"
-        tools:ignore="ContentDescription" />
+    tools:context=".ui.DashboardActivity"
+    >
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="925dp"
-        android:layout_height="126dp"
-        android:scaleX="200"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="106dp"
+        android:layout_height="104dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="44dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0"
-        app:srcCompat="@drawable/shadow"
-        tools:ignore="ContentDescription" />
+        app:srcCompat="@drawable/defaultavatar" />
 
     <ImageView
         android:id="@+id/imageView2"
-        android:layout_width="75dp"
-        android:layout_height="67dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="361dp"
+        android:layout_height="670dp"
+        android:layout_marginTop="44dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.952"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.85"
-        app:srcCompat="@drawable/add_icon"
-        tools:ignore="ContentDescription" />
+        app:srcCompat="@drawable/mainmenu_background_putih" />
 
     <ImageView
         android:id="@+id/imageView3"
-        android:layout_width="113dp"
-        android:layout_height="107dp"
-        android:layout_marginTop="32dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="268dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/defaultavatar"
-        tools:ignore="ContentDescription" />
+        app:srcCompat="@drawable/shadow" />
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="357dp"
+        android:layout_height="421dp"
+        android:layout_marginTop="-180dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="parent"
+        app:srcCompat="@drawable/dashboardbuttom" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:text="Hello, User!"
+        android:textColor="@color/white"
+        android:textSize="25dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/imageView3"
+        app:layout_constraintStart_toEndOf="@+id/imageView"
+        app:layout_constraintTop_toTopOf="@+id/imageView2"
+        app:layout_constraintVertical_bias="0.163" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="74dp"
+        android:layout_height="76dp"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/shapedashboard"
+        android:padding="10dp"
+        android:text="+"
+        android:textColor="@color/white"
+        android:textSize="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.878"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imageView4" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+

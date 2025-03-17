@@ -24,7 +24,7 @@
 
     <EditText
         android:id="@+id/user_email_input"
-        android:layout_width="match_parent"
+        android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:autofillHints=""
         android:ems="10"
@@ -37,7 +37,7 @@
 
     <EditText
         android:id="@+id/user_pass_input"
-        android:layout_width="match_parent"
+        android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:autofillHints=""
         android:ems="10"
@@ -51,6 +51,8 @@
         android:layout_width="320dp"
         android:layout_height="wrap_content"
         android:text="@string/button_login"
+        android:textColor="@color/white"
+        android:background="@drawable/shapedashboard"
         android:textSize="20sp"
         android:textStyle="bold" />
 
@@ -58,7 +60,9 @@
         android:id="@+id/register_button"
         android:layout_width="320dp"
         android:layout_height="wrap_content"
+        android:background="@drawable/shapedashboard"
         android:text="@string/button_register"
+        android:textColor="@color/white"
         android:textSize="20sp"
         android:textStyle="bold" />
 
