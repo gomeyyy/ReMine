@@ -6,6 +6,51 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/todo"
     tools:context=".ui.NotesAndTodos">
+
+    <LinearLayout
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/arrowbutton"
+        android:orientation="horizontal" >
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp">
+
+        <EditText
+            android:id="@+id/editTextText"
+            android:layout_width="411dp"
+            android:layout_height="74dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_weight="1"
+            android:ems="10"
+            android:inputType="text"
+            android:hint="Title..."
+            android:textColorHint="#8E8E8E"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="466dp">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="411dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:hint="Notes"
+            android:gravity="top"
+            android:textColorHint="#8E8E8E"
+            android:textColor="@color/black"/>
+    </LinearLayout>
+
 
 </LinearLayout>
