@@ -3,8 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/register_page_layout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/background"
     android:gravity="center"
     android:orientation="vertical"
     android:padding="20dp"
@@ -17,6 +18,7 @@
         android:padding="10dp"
         android:text="@string/title_register"
         android:textAlignment="center"
+        android:textColor="@color/white"
         android:textSize="24sp"
         android:textStyle="bold" />
 
@@ -26,7 +28,8 @@
         android:layout_height="48dp"
         android:autofillHints=""
         android:hint="@string/user_email"
-        android:inputType="textEmailAddress" />
+        android:inputType="textEmailAddress"
+        android:textColorHint="#949494" />
 
     <EditText
         android:id="@+id/registerPasswordInput"
@@ -34,14 +37,19 @@
         android:layout_height="48dp"
         android:autofillHints=""
         android:hint="@string/user_password"
-        android:inputType="textPassword" />
+        android:inputType="textPassword"
+        android:textColorHint="#949494" />
 
     <Button
         android:id="@+id/registerUserButton"
         android:layout_width="320dp"
         android:layout_height="wrap_content"
         android:text="@string/button_register"
+        android:background="@drawable/shapedashboard"
         android:textSize="20sp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp"
+        android:textColor="@color/white"
         android:textStyle="bold" />
 
     <Button
@@ -50,5 +58,8 @@
         android:layout_height="wrap_content"
         android:text="@string/button_go_login"
         android:textSize="20sp"
+        android:background="@drawable/shapedashboard"
+        android:textColor="@color/white"
         android:textStyle="bold" />
+
 </LinearLayout>
