@@ -45,7 +45,11 @@
         android:layout_width="320dp"
         android:layout_height="wrap_content"
         android:text="@string/button_register"
+        android:background="@drawable/shapedashboard"
         android:textSize="20sp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp"
+        android:textColor="@color/white"
         android:textStyle="bold" />
 
     <Button
@@ -54,6 +58,8 @@
         android:layout_height="wrap_content"
         android:text="@string/button_go_login"
         android:textSize="20sp"
+        android:background="@drawable/shapedashboard"
+        android:textColor="@color/white"
         android:textStyle="bold" />
 
 </LinearLayout>
