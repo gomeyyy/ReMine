@@ -5,8 +5,9 @@
     <string name="user_email">Email (@example.com)</string>
     <string name="user_password">Password</string>
     <string name="button_login">Login</string>
-    <string name="button_go_login">Go To Login</string>
     <string name="button_register">Register</string>
+    <string name="button_go_login">Already Have an Account? Go To Login</string>
+    <string name="button_go_register">No Account? Create Your\'s Here</string>
 
     <string-array name="categories">
         <item>Work And Education</item>

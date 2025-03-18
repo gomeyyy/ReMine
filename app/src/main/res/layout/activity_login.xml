@@ -62,10 +62,10 @@
         android:id="@+id/register_button"
         android:layout_width="320dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/shapedashboard"
-        android:text="@string/button_register"
+        android:background="@null"
+        android:text="@string/button_go_register"
         android:textColor="@color/white"
-        android:textSize="20sp"
-        android:textStyle="bold" />
+        android:textSize="15sp"
+        android:textStyle="normal" />
 
 </LinearLayout>
