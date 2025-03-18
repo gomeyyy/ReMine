@@ -9,6 +9,15 @@
     android:padding="10dp"
     tools:context=".ui.FirestoreTestingActivity" >
 
+    <Spinner
+        android:id="@+id/categorySpinner"
+        android:layout_margin="2dp"
+        android:padding="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+    </Spinner>
+
     <EditText
         android:id="@+id/titleEt"
         android:layout_margin="2dp"
@@ -56,15 +65,6 @@
     </EditText>
 
     <Spinner
-        android:id="@+id/categorySpinner"
-        android:layout_margin="2dp"
-        android:padding="20dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        >
-    </Spinner>
-
-    <Spinner
         android:id="@+id/prioritySpinner"
         android:layout_margin="2dp"
         android:padding="20dp"
@@ -83,7 +83,4 @@
         android:text="+"
         android:textSize="20dp" >
     </Button>
-
-
-
 </LinearLayout>
