@@ -57,9 +57,9 @@
         android:layout_width="320dp"
         android:layout_height="wrap_content"
         android:text="@string/button_go_login"
-        android:textSize="20sp"
-        android:background="@drawable/shapedashboard"
+        android:textSize="15sp"
+        android:background="@null"
         android:textColor="@color/white"
-        android:textStyle="bold" />
+        android:textStyle="normal" />
 
 </LinearLayout>

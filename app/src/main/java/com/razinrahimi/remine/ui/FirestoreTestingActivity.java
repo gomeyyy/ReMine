@@ -1,5 +1,6 @@
 package com.razinrahimi.remine.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -76,6 +77,7 @@ public class FirestoreTestingActivity extends AppCompatActivity {
                 String dueDate = duedateIn.getText().toString().trim();
                 String location = locationIn.getText().toString().trim();
                 uploadData(title,notes,dueDate,location);
+                startActivity(new Intent(view.getContext(), MasterTimetable.class));
             }
         });
 
