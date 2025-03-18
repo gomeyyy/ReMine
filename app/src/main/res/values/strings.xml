@@ -8,4 +8,15 @@
     <string name="button_go_login">Go To Login</string>
     <string name="button_register">Register</string>
 
+    <string-array name="categories">
+        <item>Work And Education</item>
+        <item>Personal</item>
+        <item>Health</item>
+    </string-array>
+
+    <string-array name="priorities">
+        <item>Low</item>
+        <item>Medium</item>
+        <item>High</item>
+    </string-array>
 </resources>

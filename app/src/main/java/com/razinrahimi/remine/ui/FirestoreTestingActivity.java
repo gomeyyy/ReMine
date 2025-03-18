@@ -1,16 +1,16 @@
 package com.razinrahimi.remine.ui;
 
-import android.net.wifi.p2p.WifiP2pManager;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.view.menu.ActionMenuItemView;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -24,14 +24,13 @@ import com.razinrahimi.remine.R;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 import java.util.UUID;
 
 public class FirestoreTestingActivity extends AppCompatActivity {
 
     EditText titleIn, notesIn, duedateIn, locationIn;
     Button addTaskBtn;
-
+    Spinner categorySpinner,prioritySpinner;
     FirebaseFirestore db;
 
     @Override
@@ -45,8 +44,28 @@ public class FirestoreTestingActivity extends AppCompatActivity {
         duedateIn = findViewById(R.id.dueDateEt);
         locationIn = findViewById(R.id.locationEt);
         addTaskBtn = findViewById(R.id.addTaskBtn);
+        categorySpinner = findViewById(R.id.categorySpinner);
+        prioritySpinner = findViewById(R.id.prioritySpinner);
 
         db = FirebaseFirestore.getInstance();
+
+        //Select Category
+        ArrayAdapter<CharSequence> adapter1 = ArrayAdapter.createFromResource(
+                this,
+                R.array.categories, // Reference to the array
+                android.R.layout.simple_spinner_item
+        );
+        adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        categorySpinner.setAdapter(adapter1);
+
+        //Select Priority
+        ArrayAdapter<CharSequence> adapter2 = ArrayAdapter.createFromResource(
+                this,
+                R.array.priorities, // Reference to the array
+                android.R.layout.simple_spinner_item
+        );
+        adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        prioritySpinner.setAdapter(adapter2);
 
         addTaskBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,18 +101,15 @@ public class FirestoreTestingActivity extends AppCompatActivity {
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-                        Toast.makeText(FirestoreTestingActivity.this, "Uploaded...", Toast.LENGTH_SHORT);
+                        Toast.makeText(FirestoreTestingActivity.this, "Uploaded...", Toast.LENGTH_SHORT).show();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(FirestoreTestingActivity.this, "Failed to Upload Data", Toast.LENGTH_SHORT);
+                        Toast.makeText(FirestoreTestingActivity.this, "Failed to Upload Data", Toast.LENGTH_SHORT).show();
                     }
                 });
-
-
     }
-
 }
 
