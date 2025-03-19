@@ -16,23 +16,25 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.FirebaseFirestore;
+
 
 import com.razinrahimi.remine.R;
+import com.razinrahimi.remine.data.HealthTask;
+import com.razinrahimi.remine.data.PersonalTask;
+import com.razinrahimi.remine.data.Task;
+import com.razinrahimi.remine.data.TaskManager;
+import com.razinrahimi.remine.data.TaskPriority;
+import com.razinrahimi.remine.data.WorkTask;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class FirestoreTestingActivity extends AppCompatActivity {
 
     EditText titleIn, notesIn, duedateIn, locationIn;
     Button addTaskBtn;
     Spinner categorySpinner,prioritySpinner;
-    FirebaseFirestore db;
+    TaskManager taskManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +50,7 @@ public class FirestoreTestingActivity extends AppCompatActivity {
         categorySpinner = findViewById(R.id.categorySpinner);
         prioritySpinner = findViewById(R.id.prioritySpinner);
 
-        db = FirebaseFirestore.getInstance();
+        taskManager = new TaskManager(FirestoreTestingActivity.this);
 
         //Select Category
         ArrayAdapter<CharSequence> adapter1 = ArrayAdapter.createFromResource(
@@ -71,12 +73,7 @@ public class FirestoreTestingActivity extends AppCompatActivity {
         addTaskBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                String title = titleIn.getText().toString().trim();
-                String notes = notesIn.getText().toString().trim();
-                String dueDate = duedateIn.getText().toString().trim();
-                String location = locationIn.getText().toString().trim();
-                uploadData(title,notes,dueDate,location);
+                uploadData();
                 startActivity(new Intent(view.getContext(), MasterTimetable.class));
             }
         });
@@ -87,31 +84,32 @@ public class FirestoreTestingActivity extends AppCompatActivity {
             return insets;
         });
     }
-    private void uploadData(String title, String notes, String dueDate,String location) {
+    private void uploadData() {
 
-        String id = UUID.randomUUID().toString();
+        String title = titleIn.getText().toString().trim();
+        String notes = notesIn.getText().toString().trim();
+        String dueDate = duedateIn.getText().toString().trim();
+        String location = locationIn.getText().toString().trim();
 
-        Map<String , Object> tasks = new HashMap<>();
+        String priorityText = prioritySpinner.getSelectedItem().toString();
+        TaskPriority priority = TaskPriority.valueOf(priorityText.toUpperCase());
 
-        tasks.put("id" , id);
-        tasks.put("title", title);
-        tasks.put("notes", notes);
-        tasks.put("dueDate", dueDate);
-        tasks.put("location", location);
+        String categorySelected = categorySpinner.getSelectedItem().toString();
 
-        db.collection("TestDocuments").document(id).set(tasks)
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        Toast.makeText(FirestoreTestingActivity.this, "Uploaded...", Toast.LENGTH_SHORT).show();
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(FirestoreTestingActivity.this, "Failed to Upload Data", Toast.LENGTH_SHORT).show();
-                    }
-                });
+        Task newTask;
+
+        if (categorySelected.equalsIgnoreCase("Work And Education")) {
+            newTask = new WorkTask(title, notes, dueDate, priority, location);
+        } else if (categorySelected.equalsIgnoreCase("Personal")) {
+            newTask = new PersonalTask(title, notes, dueDate, priority);
+        } else if (categorySelected.equalsIgnoreCase("Health")) {
+            newTask = new HealthTask(title, notes, dueDate, priority, false); //Placeholder, tak siap lagi
+        } else {
+            Toast.makeText(this, "Invalid category selected!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        taskManager.addTask(newTask);
     }
 }
 
