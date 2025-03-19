@@ -61,6 +61,7 @@
             android:layout_height="match_parent"
             android:textSize="20dp"
             android:text="ACCOUNT PROFILE"
+            android:textColor="@color/black"
             android:gravity="center_vertical"
 
             />
@@ -78,13 +79,13 @@
             android:layout_height="80dp"
             android:background="@drawable/notification_button" />
 
-        <TextView
-            android:layout_width="180dp"
+        <Switch
+            android:id="@+id/switch1"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:textSize="20dp"
+            android:layout_weight="1"
             android:text="NOTIFICATION"
-            android:gravity="center_vertical"
-            />
+            android:textSize="20dp"/>
     </LinearLayout>
 
     <LinearLayout
@@ -104,6 +105,7 @@
             android:layout_height="match_parent"
             android:textSize="20dp"
             android:text="CHANGE PASSWORD"
+            android:textColor="@color/black"
             android:gravity="center_vertical" />
     </LinearLayout>
 
@@ -124,6 +126,7 @@
             android:layout_height="match_parent"
             android:textSize="20dp"
             android:text="CLEAR DATA"
+            android:textColor="@color/black"
             android:gravity="center_vertical" />
     </LinearLayout>
 
@@ -144,6 +147,7 @@
             android:layout_height="match_parent"
             android:textSize="20dp"
             android:text="LOGOUT"
+            android:textColor="@color/black"
             android:gravity="center_vertical" />
     </LinearLayout>
 

@@ -7,8 +7,17 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="10dp"
+    android:background="@drawable/add_upcoming_event"
     tools:context=".ui.FirestoreTestingActivity" >
 
+    <LinearLayout
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@drawable/arrowbutton"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="15dp">
+
+    </LinearLayout>
     <Spinner
         android:id="@+id/categorySpinner"
         android:layout_margin="2dp"
