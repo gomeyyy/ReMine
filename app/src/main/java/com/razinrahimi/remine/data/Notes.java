@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Notes {
-    private int noteId;
+    private String noteId;
     private String title;
     private String content;
     private List<ChecklistItem> checklist;
-    private Integer taskId; // Nullable: If null, note is independent
+    private String taskId; // Nullable: If null, note is independent
 
-    public Notes(int noteId, String title, String content) {
+    public Notes(String noteId, String title, String content) {
         this.noteId = noteId;
         this.title = title;
         this.content = content;
@@ -18,12 +18,12 @@ public class Notes {
         this.taskId = null; // Default: No task linked
     }
 
-    public int getNoteId() { return noteId; }
+    public String getNoteId() { return noteId; }
     public String getTitle() { return title; }
     public String getContent() { return content; }
-    public Integer getTaskId() { return taskId; } // Nullable getter
+    public String getTaskId() { return taskId; } // Nullable getter
 
-    public void setTaskId(Integer taskId) {
+    public void setTaskId(String taskId) {
         this.taskId = taskId;
     }
 

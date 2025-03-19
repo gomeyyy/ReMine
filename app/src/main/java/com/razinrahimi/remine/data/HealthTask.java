@@ -1,16 +1,18 @@
 package com.razinrahimi.remine.data;
-import java.time.LocalDateTime;
+
 public class HealthTask extends Task {
     private boolean isExerciseRoutine;
 
-    public HealthTask(int taskId, String title, String description, LocalDateTime dueDate, TaskPriority priority, boolean isExerciseRoutine) {
-        super(taskId, title, description, dueDate, priority);
+    public HealthTask() {}
+
+    public HealthTask(String title, String notes, String dueDate, TaskPriority priority, boolean isExerciseRoutine) {
+        super(title, notes, dueDate, priority);
         this.isExerciseRoutine = isExerciseRoutine;
     }
-
     @Override
-    public void displayTaskDetails() {
-        System.out.println("Health Task: " + title + " | Exercise Routine: " + isExerciseRoutine);
+    public String getTaskType() {
+        return "HealthTask";
     }
+
 }
 
