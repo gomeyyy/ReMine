@@ -53,7 +53,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="50dp"
         android:orientation="vertical">
 
         <Button
@@ -64,17 +64,48 @@
             android:textSize="20dp"
             android:layout_marginTop="5dp"
             android:background="@drawable/shapedashboard"
-        android:text="Add notes" />
+        android:text="Add notes">
 
-    <ImageView
-        android:id="@+id/imageView5"
-        android:layout_width="616dp"
-        android:layout_height="378dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="0dp"
-        app:srcCompat="@drawable/dashboardbuttom" />
-
+        </Button>
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="79dp"
+        android:layout_marginTop="1dp"
+        android:background="@drawable/whitebackground"
+        android:orientation="horizontal">
+
+
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="2dp"
+            android:background="@drawable/dashboardbuttonmainmenu"
+            android:gravity="center"
+            android:textColor="@color/white" />
+
+        <Button
+            android:id="@+id/button4"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="80dp"
+            android:layout_marginTop="2dp"
+            android:background="@drawable/dashboardbuttontimetable"
+            android:gravity="center"
+            android:textColor="@color/white" />
+
+        <Button
+            android:id="@+id/button5"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="80dp"
+            android:layout_marginTop="2dp"
+            android:background="@drawable/accountsetting_profile"
+            android:gravity="center"
+            android:textColor="@color/white" />
+    </LinearLayout>
 </LinearLayout>
 
