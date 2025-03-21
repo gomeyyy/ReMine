@@ -30,7 +30,7 @@
             android:name=".ui.AccountSetting"
             android:exported="false" />
         <activity
-            android:name=".ui.FirestoreTestingActivity"
+            android:name=".ui.AddTask"
             android:exported="false" />
         <activity
             android:name=".ui.MasterTimetable"

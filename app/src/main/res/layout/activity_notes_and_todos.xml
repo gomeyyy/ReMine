@@ -9,21 +9,20 @@
     android:background="@drawable/todo"
     tools:context=".ui.NotesAndTodos">
 
-    <LinearLayout
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="40dp"
+    <ImageButton
+        android:id="@+id/back_button"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_margin="10dp"
         android:background="@drawable/arrowbutton"
-        android:orientation="horizontal" >
-    </LinearLayout>
+        android:contentDescription="@string/back_button" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="80dp">
 
         <EditText
-            android:id="@+id/editTextText"
+            android:id="@+id/notesTitle"
             android:layout_width="411dp"
             android:layout_height="74dp"
             android:layout_marginLeft="20dp"
@@ -43,6 +42,7 @@
         android:orientation="vertical">
 
         <EditText
+            android:id="@+id/notesDesc"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginLeft="20dp"

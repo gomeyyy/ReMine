@@ -9,7 +9,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-
 public class TaskManager {
     private FirebaseFirestore db;
     private Context context;
@@ -19,7 +18,6 @@ public class TaskManager {
         this.context = context;
     }
 
-    // 🔹 Add a Task (Handles Subclasses)
     public void addTask(Task task) {
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");

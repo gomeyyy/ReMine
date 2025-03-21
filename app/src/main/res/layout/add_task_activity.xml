@@ -8,16 +8,15 @@
     android:orientation="vertical"
     android:padding="10dp"
     android:background="@drawable/add_upcoming_event"
-    tools:context=".ui.FirestoreTestingActivity" >
+    tools:context=".ui.AddTask" >
 
-    <LinearLayout
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+    <ImageButton
+        android:id="@+id/back_button"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_margin="10dp"
         android:background="@drawable/arrowbutton"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="15dp">
-
-    </LinearLayout>
+        android:contentDescription="@string/back_button" />
 
     <Spinner
         android:id="@+id/categorySpinner"
@@ -45,7 +44,7 @@
         android:layout_height="160dp"
         android:layout_margin="2dp"
         android:gravity="start"
-        android:hint="Notes..."
+        android:hint="Descriptions..."
         android:inputType="textMultiLine|textCapSentences"
         android:minHeight="250dp"
         android:padding="20dp"
