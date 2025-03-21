@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -27,6 +28,7 @@ public class AddTask extends AppCompatActivity {
 
     EditText titleIn, notesIn, duedateIn, locationIn;
     Button addTaskBtn;
+    ImageButton backButton;
     Spinner categorySpinner,prioritySpinner;
     TaskManager taskManager;
 
@@ -41,6 +43,7 @@ public class AddTask extends AppCompatActivity {
         duedateIn = findViewById(R.id.dueDateEt);
         locationIn = findViewById(R.id.locationEt);
         addTaskBtn = findViewById(R.id.addTaskBtn);
+        backButton = findViewById(R.id.back_button);
         categorySpinner = findViewById(R.id.categorySpinner);
         prioritySpinner = findViewById(R.id.prioritySpinner);
 
@@ -63,6 +66,8 @@ public class AddTask extends AppCompatActivity {
         );
         adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         prioritySpinner.setAdapter(adapter2);
+
+        backButton.setOnClickListener(view -> startActivity(new Intent(this, MasterTimetable.class))); //Back To Master Timetable
 
         addTaskBtn.setOnClickListener(new View.OnClickListener() {
             @Override
