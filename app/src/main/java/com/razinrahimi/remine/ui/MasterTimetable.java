@@ -35,13 +35,17 @@ public class MasterTimetable extends AppCompatActivity {
     private List<Task> taskList;
     private FirebaseFirestore db;
 
+
     Button goToAddTaskButton;
+
+    Button buttonToDashboard, buttonToMaster, buttonToAccount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_master_timetable);
+
 
         // Initialize RecyclerView
         recyclerView = findViewById(R.id.recyclerView);
@@ -62,6 +66,17 @@ public class MasterTimetable extends AppCompatActivity {
         goToAddTaskButton.setOnClickListener(view ->
                 startActivity(new Intent(this, FirestoreTestingActivity.class))
         );
+      
+        goToAddTaskBtn = findViewById(R.id.goToAddTaskButton);
+        goToAddTaskBtn.setOnClickListener(view -> startActivity(new Intent(this, AddTask.class)));
+
+        buttonToDashboard = findViewById(R.id.button_to_dashboard);
+        buttonToAccount = findViewById(R.id.button_to_account);
+        buttonToMaster = findViewById(R.id.button_to_master);
+
+        buttonToDashboard.setOnClickListener(view -> startActivity(new Intent(this, DashboardActivity.class)));
+        buttonToAccount.setOnClickListener(view -> startActivity(new Intent(this, AccountSetting.class)));
+        buttonToMaster.setOnClickListener(view -> startActivity(new Intent(this, MasterTimetable.class)));
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());

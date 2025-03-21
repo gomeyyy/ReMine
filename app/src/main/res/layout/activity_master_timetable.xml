@@ -13,9 +13,6 @@
         android:layout_height="wrap_content"
         />
 
-
-
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -131,27 +128,63 @@
             android:textColor="@color/black"
             android:textSize="16sp"
             android:textStyle="bold" />
+
     </LinearLayout>
 
-<!--
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/calendarRecyclerView"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
--->
+        android:layout_height="wrap_content" >
 
     <Button
         android:id="@+id/goToAddTaskButton"
-        android:layout_width="61dp"
+        android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_gravity="center"
+        android:background="@drawable/add_icon"
         android:onClick="newEventAction"
-        android:text="+"
         android:textColor="@color/white"
         android:textSize="20sp"
         android:background="@drawable/shapedashboard"
         android:textStyle="bold" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="79dp"
+        android:layout_marginTop="1dp"
+        android:background="@drawable/whitebackground"
+        android:orientation="horizontal">
+
+
+        <Button
+            android:id="@+id/button_to_dashboard"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="2dp"
+            android:background="@drawable/dashboardbuttonmainmenu"
+            android:gravity="center"
+            android:textColor="@color/white" />
+
+        <Button
+            android:id="@+id/button_to_master"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="70dp"
+            android:layout_marginTop="2dp"
+            android:background="@drawable/dashboardbuttontimetable"
+            android:gravity="center"
+            android:textColor="@color/white" />
+
+        <Button
+            android:id="@+id/button_to_account"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="70dp"
+            android:layout_marginTop="2dp"
+            android:background="@drawable/accountsetting_profile"
+            android:gravity="center"
+            android:textColor="@color/white" />
+    </LinearLayout>
 
 
     <androidx.recyclerview.widget.RecyclerView
@@ -160,9 +193,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="16dp"/>
 
-
-
-
-
-
 </LinearLayout>
+</LinearLayout>
+
+

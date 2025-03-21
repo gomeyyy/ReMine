@@ -6,17 +6,15 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-
-
 
 import com.razinrahimi.remine.R;
 import com.razinrahimi.remine.data.HealthTask;
@@ -26,13 +24,11 @@ import com.razinrahimi.remine.data.TaskManager;
 import com.razinrahimi.remine.data.TaskPriority;
 import com.razinrahimi.remine.data.WorkTask;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-
-public class FirestoreTestingActivity extends AppCompatActivity {
+public class AddTask extends AppCompatActivity {
 
     EditText titleIn, notesIn, duedateIn, locationIn;
     Button addTaskBtn;
+    ImageButton backButton;
     Spinner categorySpinner,prioritySpinner;
     TaskManager taskManager;
 
@@ -40,17 +36,18 @@ public class FirestoreTestingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_firestore_testing);
+        setContentView(R.layout.add_task_activity);
 
         titleIn = findViewById(R.id.titleEt);
         notesIn = findViewById(R.id.notesEt);
         duedateIn = findViewById(R.id.dueDateEt);
         locationIn = findViewById(R.id.locationEt);
         addTaskBtn = findViewById(R.id.addTaskBtn);
+        backButton = findViewById(R.id.back_button);
         categorySpinner = findViewById(R.id.categorySpinner);
         prioritySpinner = findViewById(R.id.prioritySpinner);
 
-        taskManager = new TaskManager(FirestoreTestingActivity.this);
+        taskManager = new TaskManager(AddTask.this);
 
         //Select Category
         ArrayAdapter<CharSequence> adapter1 = ArrayAdapter.createFromResource(
@@ -69,6 +66,8 @@ public class FirestoreTestingActivity extends AppCompatActivity {
         );
         adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         prioritySpinner.setAdapter(adapter2);
+
+        backButton.setOnClickListener(view -> startActivity(new Intent(this, MasterTimetable.class))); //Back To Master Timetable
 
         addTaskBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -108,8 +107,8 @@ public class FirestoreTestingActivity extends AppCompatActivity {
             Toast.makeText(this, "Invalid category selected!", Toast.LENGTH_SHORT).show();
             return;
         }
-
         taskManager.addTask(newTask);
+
     }
 }
 
