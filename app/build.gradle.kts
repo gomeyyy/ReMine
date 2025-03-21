@@ -46,4 +46,8 @@ dependencies {
     implementation("com.google.firebase:firebase-analytics")
     implementation("com.google.firebase:firebase-firestore")
     implementation("com.google.android.gms:play-services-base:18.2.0") // Google Play Services
+    implementation ("androidx.recyclerview:recyclerview:1.2.1")
+
+
+
 }
