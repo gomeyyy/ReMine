@@ -8,7 +8,7 @@
     android:orientation="vertical"
     android:padding="10dp"
     android:background="@drawable/add_upcoming_event"
-    tools:context=".ui.FirestoreTestingActivity" >
+    tools:context=".ui.AddTask" >
 
     <LinearLayout
         android:layout_width="40dp"

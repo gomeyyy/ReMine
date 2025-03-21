@@ -24,7 +24,7 @@ public class MasterTimetable extends AppCompatActivity {
         setContentView(R.layout.activity_master_timetable);
 
         goToAddTaskBtn = findViewById(R.id.goToAddTaskButton);
-        goToAddTaskBtn.setOnClickListener(view -> startActivity(new Intent(this, FirestoreTestingActivity.class)));
+        goToAddTaskBtn.setOnClickListener(view -> startActivity(new Intent(this, AddTask.class)));
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
