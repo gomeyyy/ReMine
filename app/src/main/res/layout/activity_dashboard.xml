@@ -46,10 +46,10 @@
         app:layout_constraintTop_toBottomOf="@id/imageView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/button3" />
+        app:layout_constraintBottom_toTopOf="@id/button_to_notes" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/button_to_notes"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Add notes"
@@ -66,7 +66,7 @@
         android:layout_width="0dp"
         android:layout_height="79dp"
         android:background="@drawable/whitebackground"
-        app:layout_constraintTop_toBottomOf="@id/button3"
+        app:layout_constraintTop_toBottomOf="@id/button_to_notes"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent">

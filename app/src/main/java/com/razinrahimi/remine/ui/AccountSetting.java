@@ -46,7 +46,7 @@ public class AccountSetting extends AppCompatActivity {
         currentUser = mAuth.getCurrentUser();
 
         username = findViewById(R.id.username_display);
-
+        
         profileEditButton.setOnClickListener(view -> {
             Toast.makeText(this, "Opening Profile Edit...", Toast.LENGTH_SHORT).show();
             startActivity(new Intent(this, AccountProfile.class));
@@ -66,6 +66,10 @@ public class AccountSetting extends AppCompatActivity {
         buttonToDashboard.setOnClickListener(view -> startActivity(new Intent(this, DashboardActivity.class)));
         buttonToAccount.setOnClickListener(view -> startActivity(new Intent(this, AccountSetting.class)));
         buttonToMaster.setOnClickListener(view -> startActivity(new Intent(this, MasterTimetable.class)));
+
+        if (currentUser != null) {
+            loadUserData(); // Call loadUserData() only if user is logged in
+        }
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());

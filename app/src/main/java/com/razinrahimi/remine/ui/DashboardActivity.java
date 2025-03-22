@@ -22,7 +22,7 @@ import com.razinrahimi.remine.R;
 
 public class DashboardActivity extends AppCompatActivity {
 
-    private Button buttonToDashboard, buttonToMaster, buttonToAccount;
+    private Button buttonToDashboard, buttonToMaster, buttonToAccount, buttonToNotes;
     private TextView greetings;
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
@@ -43,12 +43,16 @@ public class DashboardActivity extends AppCompatActivity {
         buttonToDashboard = findViewById(R.id.button_to_dashboard);
         buttonToAccount = findViewById(R.id.button_to_account);
         buttonToMaster = findViewById(R.id.button_to_master);
+        buttonToNotes = findViewById(R.id.button_to_notes);
 
+        buttonToNotes.setOnClickListener(view -> startActivity(new Intent(this, NotesAndTodos.class)));
         buttonToDashboard.setOnClickListener(view -> startActivity(new Intent(this, DashboardActivity.class)));
         buttonToAccount.setOnClickListener(view -> startActivity(new Intent(this, AccountSetting.class)));
         buttonToMaster.setOnClickListener(view -> startActivity(new Intent(this, MasterTimetable.class)));
 
-        loadUserData();
+        if (currentUser != null) {
+            loadUserData(); // Call loadUserData() only if user is logged in
+        }
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
