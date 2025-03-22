@@ -11,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
-import com.razinrahimi.remine.R; // Ensure correct import
+import com.razinrahimi.remine.R;
 
 public class Notifications extends AppCompatActivity {
     Button button;
