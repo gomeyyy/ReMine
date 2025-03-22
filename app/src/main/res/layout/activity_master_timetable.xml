@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="data.WeeklyCalendarApp">
+    tools:context="ui.MasterTimetable">
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
@@ -133,7 +133,8 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
     <Button
         android:id="@+id/goToAddTaskButton"
@@ -144,7 +145,6 @@
         android:onClick="newEventAction"
         android:textColor="@color/white"
         android:textSize="20sp"
-        android:background="@drawable/shapedashboard"
         android:textStyle="bold" />
 
     <LinearLayout
@@ -187,13 +187,12 @@
     </LinearLayout>
 
 
+
+
+    </LinearLayout>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"/>
-
 </LinearLayout>
-</LinearLayout>
-
-
