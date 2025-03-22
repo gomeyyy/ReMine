@@ -8,6 +8,7 @@ public abstract class Task {
     protected String notes;
     protected String dueDate;
     protected TaskPriority priority;
+    protected TaskStatus status;
 
     //Firestore needs a no-arg constructor
     public Task() {}

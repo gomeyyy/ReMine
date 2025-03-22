@@ -3,7 +3,10 @@ package com.razinrahimi.remine.ui;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.Nullable;
@@ -35,9 +38,8 @@ public class MasterTimetable extends AppCompatActivity {
     private List<Task> taskList;
     private FirebaseFirestore db;
 
-
-    Button goToAddTaskButton;
-
+    private Spinner displayCategory;
+    Button goToAddTaskButton, refreshButton;
     Button buttonToDashboard, buttonToMaster, buttonToAccount;
 
     @Override
@@ -45,6 +47,32 @@ public class MasterTimetable extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_master_timetable);
+
+        displayCategory = findViewById(R.id.display_category);
+        ArrayAdapter<CharSequence> adapter1 = ArrayAdapter.createFromResource(
+                this,
+                R.array.categories, // Reference to the array
+                android.R.layout.simple_spinner_item
+        );
+        adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        displayCategory.setAdapter(adapter1);
+
+        String defaultCategory = "WorkTask";
+
+        refreshButton = findViewById(R.id.refresh_button);
+        refreshButton.setOnClickListener(view -> {
+            String selectedCategorySpinner = displayCategory.getSelectedItem().toString(); // Get selected category
+            String selectedCategory = defaultCategory;
+            if (selectedCategorySpinner.equals("Work And Education")) {
+                selectedCategory = "WorkTask";
+            } else if (selectedCategorySpinner.equals("Personal")) {
+                selectedCategory = "PersonalTask";
+            } else if (selectedCategorySpinner.equals("Health")) {
+                selectedCategory = "HealthTask";
+            }
+            Toast.makeText(this, "Refreshing...", Toast.LENGTH_SHORT).show();
+            fetchTasksFromFirestore(selectedCategory); // Refresh RecyclerView with selected category
+        });
 
 
         // Initialize RecyclerView
@@ -58,8 +86,7 @@ public class MasterTimetable extends AppCompatActivity {
         recyclerView.setAdapter(taskAdapter);
 
         // Fetch Tasks from Firestore
-        fetchTasksFromFirestore();
-
+        fetchTasksFromFirestore(defaultCategory);
 
         goToAddTaskButton = findViewById(R.id.goToAddTaskButton);
         // Handle Add Task Button Click
@@ -85,8 +112,9 @@ public class MasterTimetable extends AppCompatActivity {
         });
     }
 
-    private void fetchTasksFromFirestore() {
+    private void fetchTasksFromFirestore(String taskType) {
         db.collection("tasks")
+                .whereEqualTo("taskType", taskType) // ✅ Filter by task type
                 .orderBy("dueDate", Query.Direction.ASCENDING)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
