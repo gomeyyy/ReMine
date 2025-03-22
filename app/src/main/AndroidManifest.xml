@@ -3,6 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+
+
+
 
     <application
         android:allowBackup="true"
@@ -19,7 +23,6 @@
             android:exported="false" />
         <activity
             android:name=".ui.AccountProfile"
-            android:exported="false" />
         <activity
             android:name=".ui.NotesAndTodos"
             android:exported="false" />
@@ -31,7 +34,6 @@
             android:exported="false" />
         <activity
             android:name=".ui.AddTask"
-            android:exported="false" />
         <activity
             android:name=".ui.MasterTimetable"
             android:exported="false" />
@@ -53,6 +55,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
     </application>
 
 </manifest>
