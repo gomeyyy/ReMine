@@ -95,7 +95,7 @@ public class AddTask extends AppCompatActivity {
 
         String categorySelected = categorySpinner.getSelectedItem().toString();
 
-        Task newTask;
+        Task newTask; //Kena Tambah UID, Status (Completed or no)
 
         if (categorySelected.equalsIgnoreCase("Work And Education")) {
             newTask = new WorkTask(title, notes, dueDate, priority, location);
