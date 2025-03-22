@@ -12,7 +12,8 @@
     <string name="add_task">Add Task</string>
     <string name="show_notification">SHOW NOTIFICATION</string>
     <string name="notification_button">Send Notification</string>
-
+    <string name="agree">YES</string>
+    <string name="clear_data_message">ARE YOU SURE TO CLEAR THE DATA?</string>
 
     <string-array name="categories">
         <item>Work And Education</item>
