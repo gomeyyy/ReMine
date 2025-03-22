@@ -55,8 +55,8 @@ public class Notifications extends AppCompatActivity {
     private void showNotification() {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
                 .setSmallIcon(R.drawable.icon) // Ensure 'icon.png' is in 'res/drawable'
-                .setContentTitle("Notification")
-                .setContentText("This is a notification for you")
+                .setContentTitle("ALERT!")
+                .setContentText("Your data is successfully cleared :)")
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT);
 
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);

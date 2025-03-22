@@ -22,7 +22,8 @@
             android:name=".ui.ChangePassword"
             android:exported="false" />
         <activity
-            android:name=".ui.AccountProfile"
+            android:name=".ui.AccountProfile">
+    </activity>
         <activity
             android:name=".ui.NotesAndTodos"
             android:exported="false" />
@@ -33,7 +34,7 @@
             android:name=".ui.AccountSetting"
             android:exported="false" />
         <activity
-            android:name=".ui.AddTask"
+            android:name=".ui.AddTask"/>
         <activity
             android:name=".ui.MasterTimetable"
             android:exported="false" />

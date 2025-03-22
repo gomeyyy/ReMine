@@ -8,15 +8,16 @@
     <string name="button_register">Register</string>
     <string name="button_go_login">Already Have an Account? Go To Login</string>
     <string name="button_go_register">No Account? Create Your\'s Here</string>
-<<<<<<< HEAD
     <string name="back_button">Back</string>
     <string name="add_task">Add Task</string>
-=======
     <string name="show_notification">SHOW NOTIFICATION</string>
     <string name="notification_button">Send Notification</string>
+    <string name="agree">YES</string>
+    <string name="clear_data_message">ARE YOU SURE TO CLEAR THE DATA?</string>
 
 
->>>>>>> 09be904 (Added notification feature)
+
+
 
     <string-array name="categories">
         <item>Work And Education</item>
