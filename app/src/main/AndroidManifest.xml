@@ -5,9 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
 
-
-
-
+    
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -22,7 +20,7 @@
             android:name=".ui.ChangePassword"
             android:exported="false" />
         <activity
-            android:name=".ui.AccountProfile"
+            android:name=".ui.AccountProfile" />
         <activity
             android:name=".ui.NotesAndTodos"
             android:exported="false" />
@@ -33,7 +31,7 @@
             android:name=".ui.AccountSetting"
             android:exported="false" />
         <activity
-            android:name=".ui.AddTask"
+            android:name=".ui.AddTask"/>
         <activity
             android:name=".ui.MasterTimetable"
             android:exported="false" />

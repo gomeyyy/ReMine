@@ -64,11 +64,11 @@ public class MasterTimetable extends AppCompatActivity {
         goToAddTaskButton = findViewById(R.id.goToAddTaskButton);
         // Handle Add Task Button Click
         goToAddTaskButton.setOnClickListener(view ->
-                startActivity(new Intent(this, FirestoreTestingActivity.class))
+                startActivity(new Intent(this, AddTask.class))
         );
       
-        goToAddTaskBtn = findViewById(R.id.goToAddTaskButton);
-        goToAddTaskBtn.setOnClickListener(view -> startActivity(new Intent(this, AddTask.class)));
+        goToAddTaskButton = findViewById(R.id.goToAddTaskButton);
+        goToAddTaskButton.setOnClickListener(view -> startActivity(new Intent(this, AddTask.class)));
 
         buttonToDashboard = findViewById(R.id.button_to_dashboard);
         buttonToAccount = findViewById(R.id.button_to_account);
