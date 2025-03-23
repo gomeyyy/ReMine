@@ -110,6 +110,7 @@ public class DashboardActivity extends AppCompatActivity {
     private void fetchTasksFromFirestore() {
         db.collection("tasks")
                 .orderBy("dueDate", Query.Direction.ASCENDING)
+                .whereEqualTo("userId", FirebaseAuth.getInstance().getCurrentUser().getUid())
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException e) {
