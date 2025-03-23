@@ -48,5 +48,8 @@ public abstract class Task {
     public void setStatus(TaskStatus status) { this.status = status;}
 
     public abstract String getTaskType();
+    public abstract String getLocation();
+
+
 
 }
