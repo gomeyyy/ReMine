@@ -22,6 +22,7 @@ import com.razinrahimi.remine.data.PersonalTask;
 import com.razinrahimi.remine.data.Task;
 import com.razinrahimi.remine.data.TaskManager;
 import com.razinrahimi.remine.data.TaskPriority;
+import com.razinrahimi.remine.data.TaskStatus;
 import com.razinrahimi.remine.data.WorkTask;
 
 public class AddTask extends AppCompatActivity {
@@ -95,11 +96,6 @@ public class AddTask extends AppCompatActivity {
 
         String categorySelected = categorySpinner.getSelectedItem().toString();
 
-        if (title.isEmpty() || dueDate.isEmpty()) {
-            Toast.makeText(this, "Title And Due Date Cannot Be Empty", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
         Task newTask; //Kena Tambah UID, Status (Completed or no)
 
         if (categorySelected.equalsIgnoreCase("Work And Education")) {
@@ -112,6 +108,7 @@ public class AddTask extends AppCompatActivity {
             Toast.makeText(this, "Invalid category selected!", Toast.LENGTH_SHORT).show();
             return;
         }
+
         taskManager.addTask(newTask);
 
     }
