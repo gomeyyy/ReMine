@@ -41,7 +41,7 @@
         app:srcCompat="@drawable/defaultavatar" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/textViewUsername"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:textSize="20dp"
@@ -51,11 +51,11 @@
         android:text="User' Name" />
 
     <EditText
-        android:id="@+id/editTextTextEmailAddress3"
+        android:id="@+id/editTextEmailAddress"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="Your email address"
+        android:hint="Email Address"
         android:layout_marginRight="20dp"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="10dp"
@@ -77,7 +77,7 @@
         android:inputType="number" />
 
     <EditText
-        android:id="@+id/editTextText3"
+        android:id="@+id/editTextName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"

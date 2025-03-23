@@ -95,6 +95,11 @@ public class AddTask extends AppCompatActivity {
 
         String categorySelected = categorySpinner.getSelectedItem().toString();
 
+        if (title.isEmpty() || dueDate.isEmpty()) {
+            Toast.makeText(this, "Title And Due Date Cannot Be Empty", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         Task newTask; //Kena Tambah UID, Status (Completed or no)
 
         if (categorySelected.equalsIgnoreCase("Work And Education")) {

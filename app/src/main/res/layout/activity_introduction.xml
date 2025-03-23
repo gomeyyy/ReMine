@@ -1,60 +1,137 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@drawable/register"
     tools:context=".ui.Introduction">
 
-
     <TextView
-        android:layout_width="match_parent"
+        android:id="@+id/welcome_text"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="clip_vertical"
-        android:layout_marginTop="150dp"
-        android:layout_marginLeft="20dp"
+        android:layout_marginTop="160dp"
         android:text="WELCOME"
-        android:textSize="40dp"
-        android:textStyle="bold"
         android:textColor="@color/white"
-        />
+        android:textSize="40sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.072"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textView2"
-        android:layout_width="280dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="clip_vertical"
-        android:layout_marginLeft="40dp"
-        android:layout_marginTop="0dp"
+        android:layout_marginTop="10dp"
+        android:paddingHorizontal="40dp"
         android:text="THE BEST APP FOR YOUR ORGANIZATION PLAN"
         android:textColor="@color/white"
-        android:textSize="30dp"
-        android:textStyle="normal" />
+        android:textSize="30sp"
+        android:textStyle="normal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/welcome_text" />
 
     <Button
         android:id="@+id/buttonToLogin"
         android:layout_width="158dp"
         android:layout_height="50dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginLeft="125dp"
+        android:layout_marginTop="112dp"
         android:background="@drawable/whitebackground"
         android:text="LOGIN"
         android:textColor="@color/black"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textView2" />
 
     <Button
         android:id="@+id/buttonToReg"
         android:layout_width="192dp"
         android:layout_height="50dp"
-        android:layout_marginLeft="105dp"
         android:layout_marginTop="5dp"
         android:layout_marginBottom="30dp"
         android:background="@null"
         android:text="CREATE NEW ACCOUNT"
         android:textColor="@color/white"
-        android:textStyle="normal" />
+        android:textStyle="normal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/buttonToLogin"
+        app:layout_constraintVertical_bias="0.0" />
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+    <!--
+    <?xml version="1.0" encoding="utf-8"?>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@drawable/register"
+        tools:context=".ui.Introduction">
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="clip_vertical"
+            android:layout_marginTop="150dp"
+            android:layout_marginLeft="20dp"
+            android:text="WELCOME"
+            android:textSize="40dp"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="280dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="clip_vertical"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="0dp"
+            android:text="THE BEST APP FOR YOUR ORGANIZATION PLAN"
+            android:textColor="@color/white"
+            android:textSize="30dp"
+            android:textStyle="normal" />
+
+        <Button
+            android:id="@+id/buttonToLogin"
+            android:layout_width="158dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="125dp"
+            android:background="@drawable/whitebackground"
+            android:text="LOGIN"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/buttonToReg"
+            android:layout_width="192dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="105dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="30dp"
+            android:background="@null"
+            android:text="CREATE NEW ACCOUNT"
+            android:textColor="@color/white"
+            android:textStyle="normal" />
+
+    </LinearLayout>
+    -->
