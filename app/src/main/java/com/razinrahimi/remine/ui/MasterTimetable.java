@@ -1,5 +1,6 @@
 package com.razinrahimi.remine.ui;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,11 +10,13 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -26,8 +29,12 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.razinrahimi.remine.R;
 import com.razinrahimi.remine.adapters.TaskAdapter;
 import com.razinrahimi.remine.data.Task;
+import com.razinrahimi.remine.data.TaskStatus;
 import com.razinrahimi.remine.data.UserTask;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,12 +42,14 @@ public class MasterTimetable extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private TaskAdapter taskAdapter;
-    private FirebaseFirestore db;
     private List<Task> taskList;
+    private FirebaseFirestore db;
 
     private Spinner displayCategory;
     Button goToAddTaskButton, refreshButton;
     Button buttonToDashboard, buttonToMaster, buttonToAccount;
+    private Context context;
+    private String taskType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,7 +91,7 @@ public class MasterTimetable extends AppCompatActivity {
         // Initialize Firestore & Task List
         db = FirebaseFirestore.getInstance();
         taskList = new ArrayList<>();
-        taskAdapter = new TaskAdapter(taskList);
+        taskAdapter = new TaskAdapter(taskList, this);
         recyclerView.setAdapter(taskAdapter);
 
         // Fetch Tasks from Firestore
@@ -93,7 +102,7 @@ public class MasterTimetable extends AppCompatActivity {
         goToAddTaskButton.setOnClickListener(view ->
                 startActivity(new Intent(this, AddTask.class))
         );
-      
+
         goToAddTaskButton = findViewById(R.id.goToAddTaskButton);
         goToAddTaskButton.setOnClickListener(view -> startActivity(new Intent(this, AddTask.class)));
 
@@ -110,7 +119,30 @@ public class MasterTimetable extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        itemTouchHelper.attachToRecyclerView(recyclerView);
+        String taskType = "WorkTask"; //
+
     }
+
+    ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+        @Override
+        public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+            return false;
+        }
+
+        @Override
+        public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+            int position = viewHolder.getAdapterPosition();
+            Task task = taskAdapter.getTask(position);
+
+            if (direction == ItemTouchHelper.RIGHT) { // Swipe Right → Delete
+                showDeleteConfirmation(viewHolder, task, position);
+            } else if (direction == ItemTouchHelper.LEFT) { // Swipe Left → Edit
+                editTask(task);
+            }
+        }
+    });
 
     private void fetchTasksFromFirestore(String taskType) {
         db.collection("tasks")
@@ -125,12 +157,94 @@ public class MasterTimetable extends AppCompatActivity {
                         }
                         taskList.clear();
                         for (DocumentSnapshot doc : value.getDocuments()) {
-                            UserTask task = doc.toObject(UserTask.class); // ✅ Firestore can now create an instance
+                            UserTask task = doc.toObject(UserTask.class);
+
+                            checkAndUpdateOverdueTask(task);
 
                             taskList.add(task);
                         }
                         taskAdapter.setTasks(taskList);
                     }
+
                 });
     }
+
+    private void showDeleteConfirmation(RecyclerView.ViewHolder viewHolder, Task task, int position) {
+        new android.app.AlertDialog.Builder(this)
+                .setTitle("Confirm Delete")
+                .setMessage("Are you sure you want to delete this task?")
+                .setPositiveButton("Delete", (dialog, which) -> {
+                    db.collection("tasks").document(task.getTaskId()).delete()
+                            .addOnSuccessListener(aVoid -> {
+                                taskAdapter.removeTask(position);
+                                showUndoSnackbar(viewHolder.itemView, task, position);
+                            })
+                            .addOnFailureListener(e -> Toast.makeText(this, "Failed to delete task!", Toast.LENGTH_SHORT).show());
+                })
+                .setNegativeButton("Cancel", (dialog, which) -> taskAdapter.notifyItemChanged(position))
+                .show();
+    }
+
+    // Show Undo Snackbar
+    private void showUndoSnackbar(android.view.View view, Task task, int position) {
+        com.google.android.material.snackbar.Snackbar.make(view, "Task deleted", com.google.android.material.snackbar.Snackbar.LENGTH_LONG)
+                .setAction("Undo", v -> restoreDeletedTask(task, position))
+                .show();
+    }
+
+    // Restore deleted task
+    private void restoreDeletedTask(Task task, int position) {
+        db.collection("tasks").document(task.getTaskId()).set(task)
+                .addOnSuccessListener(aVoid -> {
+                    taskList.add(position, task);
+                    taskAdapter.notifyItemInserted(position);
+                })
+                .addOnFailureListener(e -> Toast.makeText(this, "Failed to restore task!", Toast.LENGTH_SHORT).show());
+    }
+
+    // Open Edit Task Page
+    public void editTask(Task task) {
+
+        // Pass task details to AddTask activity
+        Intent intent = new Intent(this, AddTask.class);
+        intent.putExtra("taskId", task.getTaskId());
+        intent.putExtra("title", task.getTitle());
+        intent.putExtra("description", task.getNotes());
+        intent.putExtra("dueDate", task.getDueDate());
+        intent.putExtra("priority", task.getPriority());
+
+        startActivity(intent);
+        db.collection("tasks").document(task.getTaskId()).delete();
+        taskList.remove(task);
+    }
+
+    private void checkAndUpdateOverdueTask(Task task) {
+        try {
+            // ✅ Convert dueDate from String to LocalDate
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy"); // Ensure Firestore date format matches
+            LocalDate dueDate = LocalDate.parse(task.getDueDate(), formatter);
+            LocalDate today = LocalDate.now();
+
+            // ✅ If the task is PENDING and the due date has passed, mark it as OVERDUE
+            if (dueDate.isBefore(today) && task.getStatus() == TaskStatus.PENDING) {
+                task.setStatus(TaskStatus.OVERDUE);
+
+                // ✅ Update Firestore to mark task as OVERDUE
+                db.collection("tasks").document(task.getTaskId())
+                        .update("status", TaskStatus.OVERDUE.name())
+                        .addOnSuccessListener(aVoid -> Log.d("Firestore", "Task marked as overdue: " + task.getTaskId()))
+                        .addOnFailureListener(e -> Log.e("Firestore Error", "Failed to update task status", e));
+            }
+        } catch (DateTimeParseException e) {
+            Log.e("Date Error", "Invalid date format for task: " + task.getTaskId(), e);
+        }
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        fetchTasksFromFirestore(taskType); // Refresh RecyclerView after returning
+    }
+
 }

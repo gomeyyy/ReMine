@@ -12,4 +12,9 @@ public class WorkTask extends Task{
     public String getTaskType() {
         return "WorkTask";
     }
+
+    @Override
+    public TaskStatus getStatus() { return TaskStatus.PENDING; }
 }
+
+
