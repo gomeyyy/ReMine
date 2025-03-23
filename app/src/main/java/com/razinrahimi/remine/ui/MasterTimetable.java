@@ -35,8 +35,8 @@ public class MasterTimetable extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private TaskAdapter taskAdapter;
-    private List<Task> taskList;
     private FirebaseFirestore db;
+    private List<Task> taskList;
 
     private Spinner displayCategory;
     Button goToAddTaskButton, refreshButton;
