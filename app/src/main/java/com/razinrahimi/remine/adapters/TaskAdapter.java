@@ -115,7 +115,6 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
     public void editTask(int position) {
         Task task = taskList.get(position);
 
-
         // Pass task details to AddTask activity
 
         Intent intent = new Intent(context, AddTask.class);

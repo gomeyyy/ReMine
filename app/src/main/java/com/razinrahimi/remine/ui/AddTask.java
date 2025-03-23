@@ -2,6 +2,7 @@ package com.razinrahimi.remine.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -16,6 +17,8 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.razinrahimi.remine.R;
 import com.razinrahimi.remine.data.HealthTask;
 import com.razinrahimi.remine.data.PersonalTask;
@@ -32,6 +35,7 @@ public class AddTask extends AppCompatActivity {
     ImageButton backButton;
     Spinner categorySpinner,prioritySpinner;
     TaskManager taskManager;
+    private FirebaseFirestore db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +53,12 @@ public class AddTask extends AppCompatActivity {
         prioritySpinner = findViewById(R.id.prioritySpinner);
 
         taskManager = new TaskManager(AddTask.this);
+        db = FirebaseFirestore.getInstance();
+
+        String taskId = getIntent().getStringExtra("taskId");
+        if (taskId != null && !taskId.isEmpty()) {
+            displayOldTask(taskId); // ✅ Call the function to load existing task
+        }
 
         //Select Category
         ArrayAdapter<CharSequence> adapter1 = ArrayAdapter.createFromResource(
@@ -112,5 +122,35 @@ public class AddTask extends AppCompatActivity {
         taskManager.addTask(newTask);
 
     }
+
+    public void displayOldTask(String taskId) {
+        DocumentReference taskRef = db.collection("tasks").document(taskId);
+
+        taskRef.get().addOnSuccessListener(documentSnapshot -> {
+            if (documentSnapshot.exists()) {
+                String title = documentSnapshot.getString("title");
+                String desc = documentSnapshot.getString("notes");
+                String dueDate = documentSnapshot.getString("dueDate");
+                String loc = documentSnapshot.getString("location");
+
+                // ✅ Display existing task details in the UI
+                if (title != null) {
+                    titleIn.setText(title);
+                }
+                if (desc != null) {
+                    notesIn.setText(desc);
+                }
+                if (dueDate != null) {
+                    duedateIn.setText(dueDate);
+                }
+                if (loc != null) {
+                    locationIn.setText(loc);
+                }
+            } else {
+                Toast.makeText(this, "No existing task found.", Toast.LENGTH_SHORT).show();
+            }
+        }).addOnFailureListener(e -> Toast.makeText(this, "Failed to load task data", Toast.LENGTH_SHORT).show());
+    }
+
 }
 

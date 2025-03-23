@@ -3,6 +3,7 @@ package com.razinrahimi.remine.ui;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -20,6 +21,8 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -99,9 +102,11 @@ public class MasterTimetable extends AppCompatActivity {
 
         goToAddTaskButton = findViewById(R.id.goToAddTaskButton);
         // Handle Add Task Button Click
-        goToAddTaskButton.setOnClickListener(view ->
-                startActivity(new Intent(this, AddTask.class))
-        );
+        goToAddTaskButton.setOnClickListener(view -> {
+            startActivity(new Intent(this, AddTask.class));
+            finish(); // ✅ Moved inside the lambda
+        });
+
 
         goToAddTaskButton = findViewById(R.id.goToAddTaskButton);
         goToAddTaskButton.setOnClickListener(view -> startActivity(new Intent(this, AddTask.class)));
@@ -147,6 +152,7 @@ public class MasterTimetable extends AppCompatActivity {
     private void fetchTasksFromFirestore(String taskType) {
         db.collection("tasks")
                 .whereEqualTo("taskType", taskType) // ✅ Filter by task type
+                .whereEqualTo("userId", FirebaseAuth.getInstance().getCurrentUser().getUid())
                 .orderBy("dueDate", Query.Direction.ASCENDING)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
@@ -204,17 +210,14 @@ public class MasterTimetable extends AppCompatActivity {
 
     // Open Edit Task Page
     public void editTask(Task task) {
-
         // Pass task details to AddTask activity
         Intent intent = new Intent(this, AddTask.class);
+        String taskId = task.getTaskId();
         intent.putExtra("taskId", task.getTaskId());
-        intent.putExtra("title", task.getTitle());
-        intent.putExtra("description", task.getNotes());
-        intent.putExtra("dueDate", task.getDueDate());
-        intent.putExtra("priority", task.getPriority());
 
         startActivity(intent);
-        db.collection("tasks").document(task.getTaskId()).delete();
+
+        db.collection("tasks").document(taskId).delete();
         taskList.remove(task);
     }
 
