@@ -12,7 +12,10 @@ public class WorkTask extends Task{
     public String getTaskType() {
         return "WorkTask";
     }
-
+    @Override
+    public String getLocation() {
+        return workLocation;
+    }
     @Override
     public TaskStatus getStatus() { return TaskStatus.PENDING; }
 }

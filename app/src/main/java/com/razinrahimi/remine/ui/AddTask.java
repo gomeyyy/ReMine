@@ -95,6 +95,7 @@ public class AddTask extends AppCompatActivity {
         });
     }
     private void uploadData() {
+        String taskId = getIntent().getStringExtra("taskId");
 
         String title = titleIn.getText().toString().trim();
         String notes = notesIn.getText().toString().trim();
@@ -105,6 +106,11 @@ public class AddTask extends AppCompatActivity {
         TaskPriority priority = TaskPriority.valueOf(priorityText.toUpperCase());
 
         String categorySelected = categorySpinner.getSelectedItem().toString();
+
+        if (title.isEmpty() || dueDate.isEmpty()) {
+            Toast.makeText(this, "Task title and due date cannot be empty!", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         Task newTask; //Kena Tambah UID, Status (Completed or no)
 
@@ -119,7 +125,14 @@ public class AddTask extends AppCompatActivity {
             return;
         }
 
-        taskManager.addTask(newTask);
+        if (taskId != null && !taskId.isEmpty()) {
+            // Edit existing task
+            newTask.setTaskId(taskId);
+            taskManager.updateTask(newTask);
+        } else {
+            // Add new task
+            taskManager.addTask(newTask);
+        }
 
     }
 

@@ -39,5 +39,32 @@ public class TaskManager {
                     });
                 });
     }
+
+    public void updateTask(Task task) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        String formattedDate = LocalDate.parse(task.getDueDate(), formatter).format(formatter);
+        task.setDueDate(formattedDate);
+
+        db.collection("tasks")
+                .document(task.getTaskId()) // ✅ Only update existing task
+                .update(
+                        "title", task.getTitle(),
+                        "notes", task.getNotes(),
+                        "dueDate", task.getDueDate(),
+                        "location", task.getLocation(),
+                        "priority", task.getPriority().toString(),
+                        "taskType", task.getTaskType()
+                )
+                .addOnSuccessListener(aVoid -> {
+                    ((Activity) context).runOnUiThread(() ->
+                            Toast.makeText(context, "Task updated successfully!", Toast.LENGTH_SHORT).show());
+                })
+                .addOnFailureListener(e -> {
+                    ((Activity) context).runOnUiThread(() ->
+                            Toast.makeText(context, "Update Failed: " + e.getMessage(), Toast.LENGTH_SHORT).show());
+                });
+    }
+
+
 }
 

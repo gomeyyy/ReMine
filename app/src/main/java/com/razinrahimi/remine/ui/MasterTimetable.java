@@ -216,9 +216,6 @@ public class MasterTimetable extends AppCompatActivity {
         intent.putExtra("taskId", task.getTaskId());
 
         startActivity(intent);
-
-        db.collection("tasks").document(taskId).delete();
-        taskList.remove(task);
     }
 
     private void checkAndUpdateOverdueTask(Task task) {
