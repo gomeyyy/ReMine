@@ -13,6 +13,8 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import com.razinrahimi.remine.R;
 
+//Notifications function
+//Note: Not implemented yet
 public class Notifications extends AppCompatActivity {
     Button button;
     private static final String CHANNEL_ID = "reminder_channel";

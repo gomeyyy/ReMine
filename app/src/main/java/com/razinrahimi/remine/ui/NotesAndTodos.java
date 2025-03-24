@@ -12,6 +12,8 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.razinrahimi.remine.R;
 
+//Notes page
+//Note: not implemented YET
 public class NotesAndTodos extends AppCompatActivity {
 
     ImageButton backButton;

@@ -19,11 +19,15 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.razinrahimi.remine.R;
 
+//Page to navigate to user setting pages
 public class AccountSetting extends AppCompatActivity {
 
+    //Initialise UI components
     private Button buttonToDashboard, buttonToMaster, buttonToAccount;
     private Button profileEditButton, changePasswordButton, clearDataButton, logoutButton;
     private TextView username;
+
+    //Define database
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
     private FirebaseUser currentUser;
@@ -34,7 +38,7 @@ public class AccountSetting extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_account_setting);
 
-        //Button lain
+        //Button to pages
         profileEditButton = findViewById(R.id.profile_edit);
         changePasswordButton = findViewById(R.id.change_password_button);
         clearDataButton = findViewById(R.id.clear_data_button);
@@ -46,7 +50,8 @@ public class AccountSetting extends AppCompatActivity {
         currentUser = mAuth.getCurrentUser();
 
         username = findViewById(R.id.username_display);
-        
+
+        //Event listeners to start new intent
         profileEditButton.setOnClickListener(view -> {
             Toast.makeText(this, "Opening Profile Edit...", Toast.LENGTH_SHORT).show();
             startActivity(new Intent(this, AccountProfile.class));
@@ -55,6 +60,8 @@ public class AccountSetting extends AppCompatActivity {
             Toast.makeText(this, "Opening Change Password...", Toast.LENGTH_SHORT).show();
             startActivity(new Intent(this, ChangePassword.class));
         });
+
+        //Display message using Toast
         clearDataButton.setOnClickListener(view -> Toast.makeText(this, "Feature not yet available...", Toast.LENGTH_SHORT).show());
         logoutButton.setOnClickListener(view -> Toast.makeText(this, "Feature not yet available...", Toast.LENGTH_SHORT).show());
 
@@ -63,6 +70,7 @@ public class AccountSetting extends AppCompatActivity {
         buttonToAccount = findViewById(R.id.button_to_account);
         buttonToMaster = findViewById(R.id.button_to_master);
 
+        //Event listeners for navigating
         buttonToDashboard.setOnClickListener(view -> startActivity(new Intent(this, DashboardActivity.class)));
         buttonToAccount.setOnClickListener(view -> startActivity(new Intent(this, AccountSetting.class)));
         buttonToMaster.setOnClickListener(view -> startActivity(new Intent(this, MasterTimetable.class)));
@@ -78,6 +86,7 @@ public class AccountSetting extends AppCompatActivity {
         });
     }
 
+    // Display username on top of page
     private void loadUserData() {
         String userId = currentUser.getUid();
         DocumentReference userRef = db.collection("users").document(userId);
@@ -86,7 +95,7 @@ public class AccountSetting extends AppCompatActivity {
             if (documentSnapshot.exists()) {
                 String name = documentSnapshot.getString("username");
 
-                // Display user details in the UI
+                // Display user name in the UI
                 if (!TextUtils.isEmpty(name)) {
                     username.setText(name);
                 }

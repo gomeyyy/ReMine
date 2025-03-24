@@ -2,9 +2,6 @@ package com.razinrahimi.remine.data;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -16,11 +13,12 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.razinrahimi.remine.R;
 import com.razinrahimi.remine.adapters.TaskAdapter;
 
-public class SwipeActionsCallback extends ItemTouchHelper.SimpleCallback {
+public class SwipeActionsCallback extends ItemTouchHelper.SimpleCallback { //Extend ItemTouchHelper Class (For Swipe action in UI)
     private TaskAdapter adapter;
     private Context context;
-    private FirebaseFirestore db;
+    private FirebaseFirestore db; //Variable for Firestore Database
 
+    //Constructor
     public SwipeActionsCallback(TaskAdapter adapter, Context context) {
         super(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT);
         this.adapter = adapter;
@@ -28,11 +26,13 @@ public class SwipeActionsCallback extends ItemTouchHelper.SimpleCallback {
         this.db = FirebaseFirestore.getInstance();
     }
 
+    //Dragging function
     @Override
     public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
         return false;
     }
 
+    //Method to swipe task for delete or edit
     @Override
     public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
         int position = viewHolder.getAdapterPosition();
@@ -46,10 +46,12 @@ public class SwipeActionsCallback extends ItemTouchHelper.SimpleCallback {
         }
     }
 
+    //Confirmation and toast messages for task deletion
     private void showDeleteConfirmation(RecyclerView.ViewHolder viewHolder, Task task, int position) {
         new AlertDialog.Builder(context)
                 .setTitle("Confirm Delete")
                 .setMessage("Are you sure you want to delete this task?")
+                //Delete
                 .setPositiveButton("Delete", (dialog, which) -> {
                     db.collection("tasks").document(task.getTaskId()).delete()
                             .addOnSuccessListener(aVoid -> {
@@ -58,10 +60,12 @@ public class SwipeActionsCallback extends ItemTouchHelper.SimpleCallback {
                             })
                             .addOnFailureListener(e -> Toast.makeText(context, "Failed to delete task!", Toast.LENGTH_SHORT).show());
                 })
+                //Cancel Delete
                 .setNegativeButton("Cancel", (dialog, which) -> adapter.notifyItemChanged(position))
                 .show();
     }
 
+    //UI message to undo deletion
     private void showUndoSnackbar(View view, Task task, int position) {
         com.google.android.material.snackbar.Snackbar.make(view, "Task deleted", com.google.android.material.snackbar.Snackbar.LENGTH_LONG)
                 .setAction("Undo", v -> {
@@ -71,6 +75,8 @@ public class SwipeActionsCallback extends ItemTouchHelper.SimpleCallback {
                 .show();
     }
 
+    // Supposed to show confirmation for editing task but never show
+    // If it works, don't touch it
     private void showEditDialog(Task task, int position) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("Edit Task");

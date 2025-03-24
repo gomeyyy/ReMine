@@ -12,6 +12,8 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.razinrahimi.remine.R;
 
+//Main Page When User Launch the app
+//This page navigates user to login or registration
 public class Introduction extends AppCompatActivity {
 
     Button toReg,toLogin;
@@ -25,6 +27,7 @@ public class Introduction extends AppCompatActivity {
         toReg = findViewById(R.id.buttonToReg);
         toLogin = findViewById((R.id.buttonToLogin));
 
+        //On click listener to start new intent (login and register)
         toLogin.setOnClickListener(view -> startActivity(new Intent(this, LoginActivity.class)));
         toReg.setOnClickListener(view -> startActivity(new Intent(this, RegisterActivity.class)));
 

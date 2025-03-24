@@ -1,5 +1,6 @@
 package com.razinrahimi.remine.data;
 
+//Class to store user data for each register user
 public class Users {
 
     private String userId;
@@ -14,6 +15,7 @@ public class Users {
         this.username = username;
     }
 
+    //Getter and setter required for firestore
     public String getUserID() {return userId;}
     public void setUserID(String userID) {this.userId = userID;}
     public String getEmail() {return email;}

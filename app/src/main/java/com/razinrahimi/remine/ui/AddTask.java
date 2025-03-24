@@ -28,21 +28,27 @@ import com.razinrahimi.remine.data.TaskPriority;
 import com.razinrahimi.remine.data.TaskStatus;
 import com.razinrahimi.remine.data.WorkTask;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+
 public class AddTask extends AppCompatActivity {
 
-    EditText titleIn, notesIn, duedateIn, locationIn;
-    Button addTaskBtn;
-    ImageButton backButton;
-    Spinner categorySpinner,prioritySpinner;
-    TaskManager taskManager;
+    //Define UI components
+    private EditText titleIn, notesIn, duedateIn, locationIn;
+    private Button addTaskBtn;
+    private ImageButton backButton;
+    private Spinner categorySpinner,prioritySpinner;
+    private TaskManager taskManager;
     private FirebaseFirestore db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.add_task_activity);
+        setContentView(R.layout.add_task_activity); //Link to XML
 
+        //Find components and assign variable
         titleIn = findViewById(R.id.titleEt);
         notesIn = findViewById(R.id.notesEt);
         duedateIn = findViewById(R.id.dueDateEt);
@@ -52,12 +58,14 @@ public class AddTask extends AppCompatActivity {
         categorySpinner = findViewById(R.id.categorySpinner);
         prioritySpinner = findViewById(R.id.prioritySpinner);
 
+        //Initialise task manager and database
         taskManager = new TaskManager(AddTask.this);
         db = FirebaseFirestore.getInstance();
 
+        //For task editing
         String taskId = getIntent().getStringExtra("taskId");
         if (taskId != null && !taskId.isEmpty()) {
-            displayOldTask(taskId); // ✅ Call the function to load existing task
+            displayOldTask(taskId); // Call the function to load existing task
         }
 
         //Select Category
@@ -78,8 +86,10 @@ public class AddTask extends AppCompatActivity {
         adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         prioritySpinner.setAdapter(adapter2);
 
+        //Event listener for back button
         backButton.setOnClickListener(view -> startActivity(new Intent(this, MasterTimetable.class))); //Back To Master Timetable
 
+        //When add task button is clicked, call uploadData and go back to master timetable
         addTaskBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -94,39 +104,56 @@ public class AddTask extends AppCompatActivity {
             return insets;
         });
     }
+
+    //Retrieve user input, create an object, and pass to task manager for operations
     private void uploadData() {
         String taskId = getIntent().getStringExtra("taskId");
 
+        //Retrieve user input
         String title = titleIn.getText().toString().trim();
         String notes = notesIn.getText().toString().trim();
         String dueDate = duedateIn.getText().toString().trim();
         String location = locationIn.getText().toString().trim();
 
+        //Convert enum to string
         String priorityText = prioritySpinner.getSelectedItem().toString();
         TaskPriority priority = TaskPriority.valueOf(priorityText.toUpperCase());
-
         String categorySelected = categorySpinner.getSelectedItem().toString();
+
 
         if (title.isEmpty() || dueDate.isEmpty()) {
             Toast.makeText(this, "Task title and due date cannot be empty!", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        Task newTask; //Kena Tambah UID, Status (Completed or no)
+        // Validate dueDate format
+        try {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+            LocalDate parsedDate = LocalDate.parse(dueDate, formatter); // If format is wrong, exception will be thrown
+            dueDate = parsedDate.format(formatter); // Ensure it's saved in the correct format
+        } catch (DateTimeParseException e) {
+            Toast.makeText(this, "Invalid date format! Use dd-MM-yyyy.", Toast.LENGTH_LONG).show();
+            return; // Stop execution
+        }
 
+        //Define newTask
+        Task newTask;
+
+        //Choose which type of task to create (Work, Health, Personal)
         if (categorySelected.equalsIgnoreCase("Work And Education")) {
             newTask = new WorkTask(title, notes, dueDate, priority, location);
         } else if (categorySelected.equalsIgnoreCase("Personal")) {
             newTask = new PersonalTask(title, notes, dueDate, priority);
         } else if (categorySelected.equalsIgnoreCase("Health")) {
-            newTask = new HealthTask(title, notes, dueDate, priority, false); //Placeholder, tak siap lagi
+            newTask = new HealthTask(title, notes, dueDate, priority, false); //false is a Placeholder for boolean exercise routine, not implemented YET
         } else {
             Toast.makeText(this, "Invalid category selected!", Toast.LENGTH_SHORT).show();
             return;
         }
 
+        //Call addTask for adding new task and updateTask for updating task
         if (taskId != null && !taskId.isEmpty()) {
-            // Edit existing task
+            // Edit existing task, by using taskId to find the task
             newTask.setTaskId(taskId);
             taskManager.updateTask(newTask);
         } else {
@@ -136,6 +163,7 @@ public class AddTask extends AppCompatActivity {
 
     }
 
+    //Display old task details on EditText as a guide for users when editing
     public void displayOldTask(String taskId) {
         DocumentReference taskRef = db.collection("tasks").document(taskId);
 
@@ -146,7 +174,7 @@ public class AddTask extends AppCompatActivity {
                 String dueDate = documentSnapshot.getString("dueDate");
                 String loc = documentSnapshot.getString("location");
 
-                // ✅ Display existing task details in the UI
+                // Display existing task details in the UI
                 if (title != null) {
                     titleIn.setText(title);
                 }

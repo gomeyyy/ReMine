@@ -12,6 +12,8 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.razinrahimi.remine.R;
 
+//Page for changing password
+//Note: Not implemented YET
 public class ChangePassword extends AppCompatActivity {
 
     ImageButton backButton;

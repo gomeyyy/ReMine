@@ -25,16 +25,19 @@ import java.util.List;
 
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder> {
 
-    private List<Task> taskList;
+    private List<Task> taskList; //List to store task attributes
     private Context context;
     private FirebaseFirestore db;
 
+    //Constructor
     public TaskAdapter(List<Task> taskList, Context context) {
         this.taskList = taskList;
         this.context = context;
         this.db = FirebaseFirestore.getInstance();
     }
 
+    //Part of recycler view adapter
+    //Create view holder for new tasks
     @NonNull
     @Override
     public TaskViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -42,14 +45,17 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         return new TaskViewHolder(view);
     }
 
+    //Display data in view holder
     @Override
     public void onBindViewHolder(@NonNull TaskViewHolder holder, int position) {
+        //Display tasks
         Task task = taskList.get(position);
         holder.taskTitle.setText(task.getTitle());
         holder.taskDescription.setText(task.getNotes());
         holder.taskDueDate.setText("Due: " + task.getDueDate());
         holder.taskPriority.setText("Priority: " + task.getPriority());
 
+        //Status Button Functions
         if (task.getStatus() == TaskStatus.PENDING) {
             holder.btnCompleteTask.setVisibility(View.VISIBLE);
             holder.txtOverdue.setVisibility(View.GONE);
@@ -68,37 +74,47 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         }
 
         // Handle Button Click → Update Firestore & RecyclerView
+        // Lambda expression used
         holder.btnCompleteTask.setOnClickListener(v -> markTaskAsCompleted(task, holder.getAdapterPosition()));
     }
 
+    //Mark task as complete method for status button
     private void markTaskAsCompleted(Task task, int position) {
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        FirebaseFirestore db = FirebaseFirestore.getInstance(); //Start Database
         db.collection("tasks").document(task.getTaskId())
-                .update("status", TaskStatus.COMPLETED.name()) // ✅ Update Firestore
+                .update("status", TaskStatus.COMPLETED.name()) // Update Firestore
+                //Built-in exception handling (Firestore)
+                //Check if database updated or no
                 .addOnSuccessListener(aVoid -> {
-                    task.setStatus(TaskStatus.COMPLETED); // ✅ Update locally
-                    notifyItemChanged(position); // ✅ Refresh RecyclerView
+                    task.setStatus(TaskStatus.COMPLETED); // Update locally
+                    notifyItemChanged(position); // Refresh RecyclerView
                 })
+                //Display error message using Toast
                 .addOnFailureListener(e -> Toast.makeText(context, "Failed to update task", Toast.LENGTH_SHORT).show());
     }
 
+    //Return total number of items in this adapter
     @Override
     public int getItemCount() {
         return taskList.size();
     }
 
+    //Get task to be edited
     public Task getTask(int position) {
         return taskList.get(position);
     }
 
+    //Add new tasks
     public void setTasks(List<Task> tasks) {
         this.taskList = tasks;
         notifyDataSetChanged();
     }
 
+    //Delete Task
     public void removeTask(int position) {
         Task task = taskList.get(position);
         db.collection("tasks").document(task.getTaskId()).delete()
+                //Built-in Exception Handler To Check if task is deleted or no
                 .addOnSuccessListener(aVoid -> {
                     taskList.remove(position);
                     notifyItemRemoved(position);
@@ -107,34 +123,18 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
                 .addOnFailureListener(e -> Toast.makeText(context, "Failed to delete task", Toast.LENGTH_SHORT).show());
     }
 
+    //Undo deletion
     public void restoreTask(int position, Task task) {
         taskList.add(position, task);
-        notifyItemInserted(position);
+        notifyItemInserted(position); //Insert task in list
     }
 
-    public void editTask(int position) {
-        Task task = taskList.get(position);
-
-        // Pass task details to AddTask activity
-
-        Intent intent = new Intent(context, AddTask.class);
-        intent.putExtra("taskId", task.getTaskId());
-        intent.putExtra("title", task.getTitle());
-        intent.putExtra("description", task.getNotes());
-        intent.putExtra("dueDate", task.getDueDate());
-        intent.putExtra("priority", task.getPriority());
-
-        context.startActivity(intent);
-        db.collection("tasks").document(task.getTaskId()).delete();
-                    taskList.remove(position);
-
-    }
-
-
+    //Hold task attributes in view holder
     public static class TaskViewHolder extends RecyclerView.ViewHolder {
         TextView taskTitle, taskDescription, taskDueDate, taskPriority, txtOverdue;
         Button btnCompleteTask;
 
+        //Find UI componenents in view holder
         public TaskViewHolder(View itemView) {
             super(itemView);
             taskTitle = itemView.findViewById(R.id.taskTitle);
