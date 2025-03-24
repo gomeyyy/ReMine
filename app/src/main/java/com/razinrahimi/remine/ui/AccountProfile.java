@@ -21,12 +21,17 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.razinrahimi.remine.R;
 
+//Page for displaying and editing user profile
+//Note: Editing feature not implemented YET
 public class AccountProfile extends AppCompatActivity {
 
+    //Define UI components
     private ImageButton backButton;
     private TextView textViewUserName;
     private EditText editTextEmail, editTextBirthDate, editTextName;
     private Button btnSaveChanges;
+
+    //Define database variables
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
     private FirebaseUser currentUser;
@@ -50,18 +55,23 @@ public class AccountProfile extends AppCompatActivity {
         editTextName = findViewById(R.id.editTextName);
         btnSaveChanges = findViewById(R.id.button);
 
+        //Event listener
         backButton.setOnClickListener(view -> startActivity(new Intent(this, AccountSetting.class)));
 
+        //Check if user is registered and call method to display user data
         if (currentUser != null) {
             loadUserData();
         }
 
+        //Android UI features
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
     }
+
+    //Load and display user details with exeption handler if user details not found or database failed to be opened
     private void loadUserData() {
         String userId = currentUser.getUid();
         DocumentReference userRef = db.collection("users").document(userId);

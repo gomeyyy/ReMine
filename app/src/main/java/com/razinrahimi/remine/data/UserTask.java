@@ -1,5 +1,6 @@
 package com.razinrahimi.remine.data;
 
+//Placeholder class to store task objects to display in recycler view
 public class UserTask extends Task {
 
     private String location;
