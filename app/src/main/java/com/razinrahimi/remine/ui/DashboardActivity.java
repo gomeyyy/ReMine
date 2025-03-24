@@ -38,15 +38,16 @@ import java.util.List;
 
 public class DashboardActivity extends AppCompatActivity {
 
+    //Define UI components
     private Button buttonToDashboard, buttonToMaster, buttonToAccount, buttonToNotes;
     private RecyclerView allTask;
     private List<Task> taskList;
     private TaskAdapter taskAdapter;
     private TextView greetings;
+    //Database
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
     private FirebaseUser currentUser;
-    private Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,13 +60,16 @@ public class DashboardActivity extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
         currentUser = mAuth.getCurrentUser();
 
+        //Display all task at dashboard recycler view
         allTask = findViewById(R.id.task_view_dashboard);
         allTask.setLayoutManager(new LinearLayoutManager(this));
 
+        //Initialise task list and adapter
         taskList = new ArrayList<>();
         taskAdapter = new TaskAdapter(taskList, this);
         allTask.setAdapter(taskAdapter);
 
+        //Initialise UI components
         greetings = findViewById(R.id.username_text);
         buttonToDashboard = findViewById(R.id.button_to_dashboard);
         buttonToAccount = findViewById(R.id.button_to_account);
@@ -77,6 +81,7 @@ public class DashboardActivity extends AppCompatActivity {
         buttonToAccount.setOnClickListener(view -> startActivity(new Intent(this, AccountSetting.class)));
         buttonToMaster.setOnClickListener(view -> startActivity(new Intent(this, MasterTimetable.class)));
 
+        //Load user data and tasks
         if (currentUser != null) {
             loadUserData(); // Call loadUserData() only if user is logged in
             fetchTasksFromFirestore();
@@ -89,6 +94,7 @@ public class DashboardActivity extends AppCompatActivity {
         });
     }
 
+    //Retrieve user data from users collection in firestore
     private void loadUserData() {
         String userId = currentUser.getUid();
         DocumentReference userRef = db.collection("users").document(userId);
@@ -107,6 +113,7 @@ public class DashboardActivity extends AppCompatActivity {
         }).addOnFailureListener(e -> Toast.makeText(this, "Failed to load data", Toast.LENGTH_SHORT).show());
     }
 
+    //Retrieve user's tasks from tasks collection in firestore
     private void fetchTasksFromFirestore() {
         db.collection("tasks")
                 .orderBy("dueDate", Query.Direction.ASCENDING)
@@ -120,11 +127,11 @@ public class DashboardActivity extends AppCompatActivity {
                         }
                         taskList.clear();
                         for (DocumentSnapshot doc : value.getDocuments()) {
-                            UserTask task = doc.toObject(UserTask.class); // ✅ Firestore can now create an instance
+                            UserTask task = doc.toObject(UserTask.class); //Create UserTask object from retrieved data
 
-                            taskList.add(task);
+                            taskList.add(task); //add object in tasklist
                         }
-                        taskAdapter.setTasks(taskList);
+                        taskAdapter.setTasks(taskList); //put tasklist in adapter to display
                     }
                 });
     }

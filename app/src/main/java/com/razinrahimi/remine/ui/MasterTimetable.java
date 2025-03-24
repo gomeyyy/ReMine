@@ -43,14 +43,15 @@ import java.util.List;
 
 public class MasterTimetable extends AppCompatActivity {
 
+    //Define UI components, adapter, firebase and firestore
     private RecyclerView recyclerView;
     private TaskAdapter taskAdapter;
     private List<Task> taskList;
     private FirebaseFirestore db;
 
     private Spinner displayCategory;
-    Button goToAddTaskButton, refreshButton;
-    Button buttonToDashboard, buttonToMaster, buttonToAccount;
+    private Button goToAddTaskButton, refreshButton;
+    private Button buttonToDashboard, buttonToMaster, buttonToAccount;
     private Context context;
     private String taskType;
 
@@ -60,17 +61,20 @@ public class MasterTimetable extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_master_timetable);
 
+        //Spinner catefory selection
         displayCategory = findViewById(R.id.display_category);
         ArrayAdapter<CharSequence> adapter1 = ArrayAdapter.createFromResource(
                 this,
-                R.array.categories, // Reference to the array
+                R.array.categories, // Reference to the array in strings.xml
                 android.R.layout.simple_spinner_item
         );
         adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         displayCategory.setAdapter(adapter1);
 
+        //Default task category for display
         String defaultCategory = "WorkTask";
 
+        //Refresh recyclerView
         refreshButton = findViewById(R.id.refresh_button);
         refreshButton.setOnClickListener(view -> {
             String selectedCategorySpinner = displayCategory.getSelectedItem().toString(); // Get selected category
@@ -104,13 +108,14 @@ public class MasterTimetable extends AppCompatActivity {
         // Handle Add Task Button Click
         goToAddTaskButton.setOnClickListener(view -> {
             startActivity(new Intent(this, AddTask.class));
-            finish(); // ✅ Moved inside the lambda
+            finish();
         });
 
-
+        //Initialise add task button and go to add task page on click
         goToAddTaskButton = findViewById(R.id.goToAddTaskButton);
         goToAddTaskButton.setOnClickListener(view -> startActivity(new Intent(this, AddTask.class)));
 
+        //Dashboard buttons and onclick
         buttonToDashboard = findViewById(R.id.button_to_dashboard);
         buttonToAccount = findViewById(R.id.button_to_account);
         buttonToMaster = findViewById(R.id.button_to_master);
@@ -130,6 +135,7 @@ public class MasterTimetable extends AppCompatActivity {
 
     }
 
+    // enable swipe to delete or edit functionality
     ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
         @Override
         public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
@@ -141,19 +147,21 @@ public class MasterTimetable extends AppCompatActivity {
             int position = viewHolder.getAdapterPosition();
             Task task = taskAdapter.getTask(position);
 
-            if (direction == ItemTouchHelper.RIGHT) { // Swipe Right → Delete
+            if (direction == ItemTouchHelper.RIGHT) { // Swipe Right to Delete
                 showDeleteConfirmation(viewHolder, task, position);
-            } else if (direction == ItemTouchHelper.LEFT) { // Swipe Left → Edit
+            } else if (direction == ItemTouchHelper.LEFT) { // Swipe Left to Edit
                 editTask(task);
             }
         }
     });
 
+    // method to fetch task from firestore based on selected category
     private void fetchTasksFromFirestore(String taskType) {
         db.collection("tasks")
-                .whereEqualTo("taskType", taskType) // ✅ Filter by task type
+                .whereEqualTo("taskType", taskType) // Filter by task category
+                // show task for logged in user only
                 .whereEqualTo("userId", FirebaseAuth.getInstance().getCurrentUser().getUid())
-                .orderBy("dueDate", Query.Direction.ASCENDING)
+                .orderBy("dueDate", Query.Direction.ASCENDING) // sort task by due date
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException e) {
@@ -165,16 +173,17 @@ public class MasterTimetable extends AppCompatActivity {
                         for (DocumentSnapshot doc : value.getDocuments()) {
                             UserTask task = doc.toObject(UserTask.class);
 
-                            checkAndUpdateOverdueTask(task);
+                            checkAndUpdateOverdueTask(task); // check if the task is overdue
 
                             taskList.add(task);
                         }
-                        taskAdapter.setTasks(taskList);
+                        taskAdapter.setTasks(taskList); //update the adapter with new task list
                     }
 
                 });
     }
 
+    //method to confirm task deletion
     private void showDeleteConfirmation(RecyclerView.ViewHolder viewHolder, Task task, int position) {
         new android.app.AlertDialog.Builder(this)
                 .setTitle("Confirm Delete")
@@ -182,11 +191,12 @@ public class MasterTimetable extends AppCompatActivity {
                 .setPositiveButton("Delete", (dialog, which) -> {
                     db.collection("tasks").document(task.getTaskId()).delete()
                             .addOnSuccessListener(aVoid -> {
-                                taskAdapter.removeTask(position);
-                                showUndoSnackbar(viewHolder.itemView, task, position);
+                                taskAdapter.removeTask(position); //remove task from UI
+                                showUndoSnackbar(viewHolder.itemView, task, position); //offer undo option
                             })
                             .addOnFailureListener(e -> Toast.makeText(this, "Failed to delete task!", Toast.LENGTH_SHORT).show());
                 })
+                // restore item if cancel
                 .setNegativeButton("Cancel", (dialog, which) -> taskAdapter.notifyItemChanged(position))
                 .show();
     }
@@ -218,18 +228,19 @@ public class MasterTimetable extends AppCompatActivity {
         startActivity(intent);
     }
 
+    // check if the task is overdue and update the status
     private void checkAndUpdateOverdueTask(Task task) {
         try {
-            // ✅ Convert dueDate from String to LocalDate
+            // Convert dueDate from String to LocalDate
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy"); // Ensure Firestore date format matches
             LocalDate dueDate = LocalDate.parse(task.getDueDate(), formatter);
             LocalDate today = LocalDate.now();
 
-            // ✅ If the task is PENDING and the due date has passed, mark it as OVERDUE
+            // If the task is PENDING and the due date has passed, mark it as OVERDUE
             if (dueDate.isBefore(today) && task.getStatus() == TaskStatus.PENDING) {
                 task.setStatus(TaskStatus.OVERDUE);
 
-                // ✅ Update Firestore to mark task as OVERDUE
+                // Update Firestore to mark task as OVERDUE
                 db.collection("tasks").document(task.getTaskId())
                         .update("status", TaskStatus.OVERDUE.name())
                         .addOnSuccessListener(aVoid -> Log.d("Firestore", "Task marked as overdue: " + task.getTaskId()))
@@ -240,7 +251,7 @@ public class MasterTimetable extends AppCompatActivity {
         }
     }
 
-
+    //navigate to addTask when swipe to left
     @Override
     protected void onResume() {
         super.onResume();

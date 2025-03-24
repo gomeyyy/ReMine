@@ -18,7 +18,9 @@ import com.razinrahimi.remine.R;
 
 public class LoginActivity extends AppCompatActivity {
 
+    //Define UI components
     private EditText emailInput, passwordInput;
+    //Define Firebase
     private FirebaseAuth mAuth;
 
     @Override
@@ -27,13 +29,16 @@ public class LoginActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_login);
 
+        //Init firebase authentication
         mAuth = FirebaseAuth.getInstance();
 
+        //Init UI components for user input
         emailInput = findViewById(R.id.user_email_input);
         passwordInput = findViewById(R.id.user_pass_input);
         Button loginButton = findViewById(R.id.login_button);
         Button registerButton = findViewById(R.id.register_button);
 
+        //On Click listener
         loginButton.setOnClickListener(view -> loginUser());
         registerButton.setOnClickListener(view -> startActivity(new Intent(this, RegisterActivity.class)));
 
@@ -44,17 +49,23 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    //Login user method
     private void loginUser() {
+        //Retrieve user input
         String email = emailInput.getText().toString().trim();
         String password = passwordInput.getText().toString().trim();
+        //Check if field is empty
         if (email.isEmpty() || password.isEmpty()) {
             Toast.makeText(this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
             return;
         }
+        //Firebase authentication login function
         mAuth.signInWithEmailAndPassword(email, password)
+                //Built in exception for wrong credentials
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         Toast.makeText(this, "Login successful", Toast.LENGTH_SHORT).show();
+                        //Go to main page if login successful
                         startActivity(new Intent(this, DashboardActivity.class));
                         finish();
                     } else {
